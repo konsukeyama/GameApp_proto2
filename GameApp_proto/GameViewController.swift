@@ -43,16 +43,16 @@ class GameViewController: UIViewController {
         // デバッグ表示
         self.gameView.showsFPS = true       // フレームレート
         self.gameView.showsNodeCount = true // ノードの数
-        self.gameView.showsPhysics = true   // ノードの物理関係
+        // self.gameView.showsPhysics = true   // ノードの物理関係
         
         //--------------------------------------------------
         // SKScene初期化
         //--------------------------------------------------
-        // ？？？
-        self.gameScene = GameScene(size: CGSize(width: frame.size.width, height: frame.size.height)) // SKSceneを作成
+        // self.gameScene = GameScene(size: CGSize(width: frame.size.width, height: frame.size.height)) // SKSceneを作成
+        self.gameScene = GameScene(size: self.gameView.frame.size) // SKSceneを作成
         self.gameScene.scaleMode = .aspectFill
         
-        self.gameScene.size = CGSize(width: frame.size.width, height: frame.size.height) // SKSceneをSKViewと同じく画面いっぱいに
+        // self.gameScene.size = CGSize(width: frame.size.width, height: frame.size.height) // SKSceneをSKViewと同じく画面いっぱいに　※SKScene作成時にサイズ指定しているので不要かも...
         // SKScene（gameScene）を表示
         self.gameView.presentScene(self.gameScene)
     }
@@ -63,19 +63,8 @@ class GameViewController: UIViewController {
     }
     
     // ジャンプボタン
-    @IBOutlet weak var jumpButton: UIButton!
+    // jumpButton
     @IBAction func jumpButtonAction(_ sender: Any) {
         self.gameScene.jumpingAction()
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -11,7 +11,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GameViewController" customModule="GameApp_proto" customModuleProvider="target">
             <connections>
-                <outlet property="jumpButton" destination="9Ia-8R-5pu" id="X4u-tM-o2f"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,20 +19,25 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Ia-8R-5pu">
-                    <rect key="frame" x="239" y="608" width="120" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <state key="normal" title="[ ジャンプ ]">
-                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ex3-WU-ywX">
+                    <rect key="frame" x="281" y="573" width="64" height="64"/>
+                    <state key="normal" backgroundImage="right_jump1"/>
                     <connections>
-                        <action selector="jumpButtonAction:" destination="-1" eventType="touchUpInside" id="810-d2-xYO"/>
+                        <action selector="jumpButtonAction:" destination="-1" eventType="touchDown" id="LkW-ma-l4C"/>
+                        <action selector="jumpButtonAction:" destination="-1" eventType="touchUpInside" id="ZXL-cv-xa4"/>
                     </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="ex3-WU-ywX" secondAttribute="trailing" constant="30" id="FyS-yt-KZS"/>
+                <constraint firstAttribute="bottom" secondItem="ex3-WU-ywX" secondAttribute="bottom" constant="30" id="zdz-X0-HCe"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
             <point key="canvasLocation" x="26.5" y="51.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="right_jump1" width="64" height="64"/>
+    </resources>
 </document>
