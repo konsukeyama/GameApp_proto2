@@ -43,7 +43,7 @@ class GameViewController: UIViewController {
         // デバッグ表示
         self.gameView.showsFPS = true       // フレームレート
         self.gameView.showsNodeCount = true // ノードの数
-        // self.gameView.showsPhysics = true   // ノードの物理関係
+        self.gameView.showsPhysics = true   // ノードの物理関係
         
         //--------------------------------------------------
         // SKScene初期化
@@ -63,7 +63,6 @@ class GameViewController: UIViewController {
     }
     
     // ジャンプボタン
-    // jumpButton
     @IBAction func jumpButtonAction(_ sender: Any) {
         self.gameScene.jumpingAction()
     }

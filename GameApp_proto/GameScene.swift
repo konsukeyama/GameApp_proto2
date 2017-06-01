@@ -8,7 +8,6 @@
 
 import UIKit
 import SpriteKit
-import GameplayKit // <-とりあえず必要ないかも...
 
 //移動方向
 enum Direction: Int {
@@ -16,7 +15,7 @@ enum Direction: Int {
     case left  = 1	// 左
 }
 
-enum NodeName: String {                          // <--これらは初期値""でもOK?
+enum NodeName: String {
     case frame_ground = "frame_ground" // 地面あたり
     case frame_floor  = "frame_floor"  // 浮床あたり
     case player       = "player"       // プレイヤー
@@ -42,8 +41,8 @@ enum NodeName: String {                          // <--これらは初期値""�
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // 画面まわりプロパティ
-    let baseNode = SKNode()                     // ゲームベースノード
-    let backScrNode = SKNode()                  // 背景用ノード
+    let baseNode = SKNode()                             // ゲームベースノード
+    let backScrNode = SKNode()                          // 背景用ノード
     var allScreenSize = CGSize(width: 0, height: 0)     // 全シーンのサイズ（ここでは初期化のみ）
     let oneScreenSize = CGSize(width: 375, height: 667) // 1画面分のサイズ
     
@@ -51,7 +50,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var playerNode: SKSpriteNode!               // プレイヤー用スプライトノード
     var playerDirection: Direction = .right     // 移動方向
     var physicsRadius: CGFloat = 14.0           // 物理半径
-    var playerAcceleration: CGFloat = 50.0      // 移動加速値
+    var playerAcceleration: CGFloat = 35.0      // 移動加速値
     var playerMaxVelocity: CGFloat = 200.0      // 移動量の上限
     var jumpForce: CGFloat = 16.0               // ジャンプ力
     var charXOffset: CGFloat = 0                // X位置のオフセット
@@ -70,7 +69,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         // 背景色をリセット
         self.backgroundColor = SKColor.clear
-        
+
         // 衝突判定デリゲート
         self.physicsWorld.contactDelegate = self
 
@@ -89,6 +88,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // シーンファイル読み込み
         if let scene = SKScene(fileNamed: "GameScene.sks") {
             // シーンファイルの取得成功した場合
+
+            // 重力を設定
+            physicsWorld.gravity = scene.physicsWorld.gravity
 
             //--------------------------------------------------
             // 背景
@@ -139,9 +141,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
                 // 物理設定
                 self.playerNode.physicsBody = SKPhysicsBody(circleOfRadius: self.physicsRadius, center: CGPoint(x: 0, y: self.physicsRadius)) // 物理体を作成
-                self.playerNode.physicsBody!.friction = 1.0			                                                               // 摩擦（0〜1.0、デフォ: 0.2）
+                self.playerNode.physicsBody!.friction = 0.2			                                                               // 摩擦（0〜1.0、デフォ: 0.2）
                 self.playerNode.physicsBody!.allowsRotation = false	                                                               // 回転（false: 回転禁止）
-                self.playerNode.physicsBody!.restitution = 0.0                                                                     // 弾力性（跳ね返り。0〜1.0、デフォ: 0.2）
+                self.playerNode.physicsBody!.restitution = 0.0                                                                     // 反射係数（跳ね返り。0〜1.0、デフォ: 0.2）
                 self.playerNode.physicsBody!.categoryBitMask = NodeName.player.category()                                          // 衝突判定カテゴリ（プレイヤー）
                 self.playerNode.physicsBody!.collisionBitMask = NodeName.frame_ground.category() | NodeName.frame_floor.category() // 衝突させる相手（地面、浮床）
                 self.playerNode.physicsBody!.contactTestBitMask = 0                                                                // 衝突時に通知を受ける相手（なし）
@@ -203,7 +205,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             self.stopTextureAnimation(self.playerNode, name: name)         // プレイヤーのアニメを停止
             self.playerNode.physicsBody!.velocity = CGVector(dx: 0, dy: 0) // プレイヤーの動きをゼロにする
-print("停止")
         }
     }
     
@@ -238,7 +239,7 @@ print("停止")
             location = touch.location(in: self) // タッチ座標を取得
         }
         self.tapPoint = location
-        self.playerNode.physicsBody!.linearDamping = 0.0 // 空気の摩擦ゼロ
+        self.playerNode.physicsBody!.linearDamping = 0.1 // 空気の摩擦ゼロ　<-？
     }
 
     // タッチムーブ時に呼ばれる
@@ -253,18 +254,18 @@ print("停止")
         if angle > -90 && angle < 90 {
             // 右方向へのタッチムーブの場合
             if self.moving == false || self.playerDirection != .right {
-                // 移動中かつ右向きの場合
+                // 移動中でなく、右向きの場合
                 self.moveToRight() // プレイヤーを右に移動
             }
         } else {
             // 左方向へのタッチムーブの場合
             if self.moving == false || self.playerDirection != .left {
-                // 移動中かつ左向きの場合
+                // 移動中でなく、左向きの場合
                 self.moveToLeft() // プレイヤーを左に移動
             }
         }
     }
-    
+ 
     // タッチエンド時に呼ばれる関数
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.moveStop() // プレイヤー停止
@@ -273,8 +274,10 @@ print("停止")
     
     /// シーンのフレームの更新時に呼ばれる
     override func update(_ currentTime: TimeInterval) {
+        
         // プレイヤー移動処理
         if self.moving == true {
+
             // プレイヤーが移動中の場合
             var dx: CGFloat = 0
             var dy: CGFloat = 0
@@ -283,11 +286,11 @@ print("停止")
             if self.playerDirection == .right {
                 // プレイヤーが右向きの場合
                 dx = self.playerAcceleration    // 右方向(+)の移動加速度をセット
-                dy = 0.0
+                dy = 0
             } else if self.playerDirection == .left {
                 // プレイヤーが左向きの場合
                 dx = -(self.playerAcceleration) // 左方向(-)の移動加速度をセット
-                dy = 0.0
+                dy = 0
             }
             // プレイヤーに継続的な力を加える
             self.playerNode.physicsBody!.applyForce(CGVector(dx: dx, dy: dy))
@@ -341,7 +344,7 @@ print("停止")
 
         // プレイヤー落下処理
         if ((self.playerNode.physicsBody?.velocity.dy)! < CGFloat(-9.8)) && (self.falling == false) {
-            // プレイヤーの下方向の移動量が一定数以下で落下中でない場合
+            // プレイヤーの下方向の移動量が -9.8 以下で落下中でない場合
             self.jumping = false // ジャンプ中フラグOFF
             self.falling = true  // 落下中フラグON
             self.playerNode.physicsBody!.collisionBitMask = NodeName.frame_ground.category() | NodeName.frame_floor.category()   // 衝突相手（地面＆浮床）
@@ -363,11 +366,10 @@ print("停止")
     /// 衝突したときに呼ばれる
     // プレイヤーの衝突通知は「地面」「浮床」のみのため、このメソッドが呼ばれた場合は着地時となる
     func didBegin(_ contact: SKPhysicsContact) {
-print("衝突！")
+        print("デバッグ：衝突！")
         // 当たり判定のリセット
         self.playerNode.physicsBody!.collisionBitMask = NodeName.frame_ground.category() | NodeName.frame_floor.category() // 衝突相手（地面＆浮床）
         self.playerNode.physicsBody!.contactTestBitMask = 0                                                                // 衝突通知（なし）
-        // self.playerNode.physicsBody!.velocity = CGVector(dx: self.playerNode.physicsBody!.velocity.dx, dy: 0)
         
         self.jumping = false // ジャンプ中フラグOFF
         self.falling = false // 落下中フラグOFF
@@ -401,11 +403,12 @@ print("衝突！")
             ary.append(SKTexture(imageNamed: name))
         }
         // アクションを作成（timePerFrame: アクション間隔, resize: テクスチャに合わせてサイズ変更する, restore: アクション完了後に最初のテクスチャに戻す）
-        let action = SKAction.animate(with: ary, timePerFrame: 0.1, resize: true, restore: false)
+        let firstAction = SKAction.animate(with: ary, timePerFrame: 0.2, resize: true, restore: false)
+        let lastAction = SKAction.repeatForever(SKAction.animate(with: ary, timePerFrame: 0.1, resize: true, restore: false))
         // アクション実行（＆キー名作成）
-        node.run(SKAction.repeatForever(action), withKey: "textureAnimation")
+        node.run(SKAction.sequence([firstAction, lastAction]), withKey: "textureAnimation")
     }
-    
+
     // アニメ停止（node: アニメ停止させるノード, names: 表示する画像）
     func stopTextureAnimation(_ node: SKSpriteNode, name: String) {
         node.removeAction(forKey: "textureAnimation") // 指定キーのアクションを削除
