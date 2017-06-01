@@ -239,7 +239,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             location = touch.location(in: self) // タッチ座標を取得
         }
         self.tapPoint = location
-        self.playerNode.physicsBody!.linearDamping = 0.1 // 空気の摩擦ゼロ　<-？
+        self.playerNode.physicsBody!.linearDamping = 0 // 空気の摩擦ゼロ　<-？
     }
 
     // タッチムーブ時に呼ばれる
