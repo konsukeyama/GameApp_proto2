@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,25 +19,28 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ex3-WU-ywX">
-                    <rect key="frame" x="281" y="573" width="64" height="64"/>
-                    <state key="normal" backgroundImage="right_jump1"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hdq-Jm-7p5">
+                    <rect key="frame" x="284" y="554" width="41" height="83"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="41" id="8zh-bg-gdJ"/>
+                        <constraint firstAttribute="height" constant="83" id="KdW-GT-N3K"/>
+                    </constraints>
+                    <state key="normal" backgroundImage="m_right_jump1"/>
                     <connections>
-                        <action selector="jumpButtonAction:" destination="-1" eventType="touchDown" id="LkW-ma-l4C"/>
-                        <action selector="jumpButtonAction:" destination="-1" eventType="touchUpInside" id="ZXL-cv-xa4"/>
+                        <action selector="jumpButtonAction:" destination="-1" eventType="touchDown" id="4vy-2g-saX"/>
                     </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="ex3-WU-ywX" secondAttribute="trailing" constant="30" id="FyS-yt-KZS"/>
-                <constraint firstAttribute="bottom" secondItem="ex3-WU-ywX" secondAttribute="bottom" constant="30" id="zdz-X0-HCe"/>
+                <constraint firstAttribute="trailing" secondItem="Hdq-Jm-7p5" secondAttribute="trailing" constant="50" id="Kqn-vB-3nj"/>
+                <constraint firstAttribute="bottom" secondItem="Hdq-Jm-7p5" secondAttribute="bottom" constant="30" id="djS-N7-Uo6"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <point key="canvasLocation" x="26.5" y="51.5"/>
         </view>
     </objects>
     <resources>
-        <image name="right_jump1" width="64" height="64"/>
+        <image name="m_right_jump1" width="32" height="64"/>
     </resources>
 </document>
