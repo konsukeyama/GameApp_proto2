@@ -130,9 +130,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                             tileNode.position = CGPoint(x: x, y: y)  // タイルの表示位置
                             tileNode.name = NodeName.ground.rawValue // ノード名を設定
 
-                            // 物理設定
-                            // tileNode.physicsBody = SKPhysicsBody(edgeLoopFrom: tileRect) // 矩形（エッジベース）
-                            tileNode.physicsBody = SKPhysicsBody(rectangleOf: tileSize, center: CGPoint(x: tileSize.width / 2.0, y: tileSize.height / 2.0)) // 矩形（ボリュームベース）
+                            /// 物理設定
+                            // 矩形（エッジベース）
+                            tileNode.physicsBody = SKPhysicsBody(edgeLoopFrom: tileRect)
+
+                            // 矩形（ボリュームベース）
+                            // tileNode.physicsBody = SKPhysicsBody(rectangleOf: tileSize, center: CGPoint(x: tileSize.width / 2.0, y: tileSize.height / 2.0))
 
                             tileNode.physicsBody!.friction = 0.2			                         // 摩擦（0〜1.0、デフォ: 0.2）
                             tileNode.physicsBody!.isDynamic = false			                         // 摩擦（0〜1.0、デフォ: 0.2）
@@ -197,11 +200,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 player.removeFromParent()               // シーンから子ノードを削除
                 self.baseNode.addChild(self.playerNode) // ゲームベースノード（baseNode）にスプライトノードを追加
 
-                // 物理設定
-                let playerPath = UIBezierPath(roundedRect: CGRect(x: -self.physicsRadius * 1.7 / 2, y: 0, width: self.physicsRadius * 1.7, height: self.physicsRadius * 1.7), cornerRadius: 5)
-                self.playerNode.physicsBody = SKPhysicsBody(polygonFrom: playerPath.cgPath) // 物理体（角丸矩形）を作成
-                // self.playerNode.physicsBody = SKPhysicsBody(circleOfRadius: self.physicsRadius, center: CGPoint(x: 0, y: self.physicsRadius)) // 物理体（円）を作成
-                // self.playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: self.physicsRadius * 1.5, height: self.physicsRadius * 1.5), center: CGPoint(x: 0, y: self.physicsRadius * 1.5 / 2)) // 物理体（矩形）を作成
+                /// 物理設定
+                // A:物理体（円）を作成
+                // self.playerNode.physicsBody = SKPhysicsBody(circleOfRadius: self.physicsRadius, center: CGPoint(x: 0, y: self.physicsRadius))
+
+                // B:物理体（矩形）を作成
+                self.playerNode.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: self.physicsRadius * 1.5, height: self.physicsRadius * 1.5), center: CGPoint(x: 0, y: self.physicsRadius * 1.5 / 2))
+
+                // C:物理体（角丸矩形）を作成
+                //let playerPath = UIBezierPath(roundedRect: CGRect(x: -self.physicsRadius * 1.7 / 2, y: 0, width: self.physicsRadius * 1.7, height: self.physicsRadius * 1.7), cornerRadius: 5)
+                //self.playerNode.physicsBody = SKPhysicsBody(polygonFrom: playerPath.cgPath)
 
                 /*
                 // let playerNodePhysicsBody_0 = SKPhysicsBody(rectangleOf: CGSize(width: self.physicsRadius * 1.5, height: self.physicsRadius * 1.5), center: CGPoint(x: 0, y: self.physicsRadius * 1.5 / 2)) // 物理体を作成
